@@ -5,7 +5,7 @@ import "fmt"
 import "time"
 
 
-func producer(/*TODO: parameters?*/){
+func producer(input chan<- int){
 
     for i := 0; i < 10; i++ {
         time.Sleep(100 * time.Millisecond)
@@ -15,7 +15,7 @@ func producer(/*TODO: parameters?*/){
 
 }
 
-func consumer(/*TODO: parameters?*/){
+func consumer(output <-chan int){
 
     time.Sleep(1 * time.Second)
     for {
@@ -30,9 +30,12 @@ func consumer(/*TODO: parameters?*/){
 func main(){
     
     // TODO: make a bounded buffer
+
+    input :=make(chan int)
+    output :=make(chan int)
     
-    go consumer()
-    go producer()
-    
+    go consumer(output)
+    go producer(input)
+
     select {}
 }

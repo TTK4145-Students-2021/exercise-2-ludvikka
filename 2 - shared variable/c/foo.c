@@ -2,6 +2,8 @@
 #include <stdio.h>
 
 int i = 0;
+pthread_mutex_t mtx
+pthread_mutex_init(&mtx, NULL);
 
 // Note the return type: void*
 void* incrementingThreadFunction(){
@@ -25,8 +27,6 @@ void* decrementingThreadFunction(){
 
 int main(){
     pthread_t incrementingThread, decrementingThread;
-    pthread_mutex_t mtx
-    pthread_mutex_init(&mtx, NULL);
 
 
     pthread_create(&incrementingThread, NULL, incrementingThreadFunction, NULL);

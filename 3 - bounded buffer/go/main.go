@@ -5,21 +5,23 @@ import "fmt"
 import "time"
 
 
-func producer(input chan<- int){
+func producer(boundedBuffer chan<- int){
 
     for i := 0; i < 10; i++ {
         time.Sleep(100 * time.Millisecond)
         fmt.Printf("[producer]: pushing %d\n", i)
         // TODO: push real value to buffer
+        boundedBuffer <- i
     }
 
 }
 
-func consumer(output <-chan int){
+func consumer(boundedBuffer <-chan int){
 
     time.Sleep(1 * time.Second)
     for {
-        i := 0 //TODO: get real value from buffer
+        i := <-boundedBuffer //TODO: get real value from buffer
+        
         fmt.Printf("[consumer]: %d\n", i)
         time.Sleep(50 * time.Millisecond)
     }
@@ -29,13 +31,10 @@ func consumer(output <-chan int){
 
 func main(){
     
-    // TODO: make a bounded buffer
-
-    input :=make(chan int)
-    output :=make(chan int)
+    boundedBuffer := make(chan int, 5)
     
-    go consumer(output)
-    go producer(input)
+    go consumer(boundedBuffer)
+    go producer(boundedBuffer)
 
-    select {}
+    select{}
 }

@@ -15,13 +15,10 @@ func number_server(add <-chan int, sub <-chan int, read chan<- int) {
 		select {
 		case <- add:
 			number = number + 1
-			print("add")
-			//read <- number
-			
 		case <- sub:
-			number = number + 1	
-			print("sub")
-			//read <- number
+			number = number - 1	
+		case read <- number:
+
 			
         }
 	}
@@ -64,10 +61,7 @@ func main() {
 	<- finishedSub
 	<- finishedAdd
 	
-	
 
-	
-	fmt.Println("Ferdig")
 
-	//fmt.Println("The magic number is:", <-read)
+	fmt.Println("The magic number is:", <-read)
 }

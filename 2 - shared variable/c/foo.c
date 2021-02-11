@@ -27,10 +27,6 @@ void* decrementingThreadFunction(){
 
 int main(){
     pthread_t incrementingThread, decrementingThread;
-<<<<<<< HEAD
-=======
-
->>>>>>> 0654fdfa15ae5afa6ab08e565a5238c836cbc148
 
     pthread_create(&incrementingThread, NULL, incrementingThreadFunction, NULL);
     pthread_create(&decrementingThread, NULL, decrementingThreadFunction, NULL);
